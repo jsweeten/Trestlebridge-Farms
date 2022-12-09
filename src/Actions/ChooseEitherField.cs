@@ -6,18 +6,25 @@ using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
-    public class ChoosePlowingField
+    public class ChooseEitherField
     {
         public static void CollectInput(Farm farm, ISeedProducing plant)
         {
             Utils.Clear();
-            if (farm.PlowingFields.Count > 0)
+            if (farm.PlowingFields.Count > 0 || farm.NaturalFields.Count > 0)
             {
                 for (int i = 0; i < farm.PlowingFields.Count; i++)
                 {
                     int plantCount = farm.PlowingFields[i].CountPlants();
 
                     Console.WriteLine($"{i + 1}. Plowing Field ({plantCount} rows of plants).");
+                }
+
+                for (int i = 0; i < farm.NaturalFields.Count; i++)
+                {
+                    int plantCount = farm.NaturalFields[i].CountPlants();
+
+                    Console.WriteLine($"{i + 1 + farm.PlowingFields.Count}. Natural Field ({plantCount} rows of plants).");
                 }
 
                 Console.WriteLine();
@@ -28,7 +35,20 @@ namespace Trestlebridge.Actions
                 Console.Write("> ");
                 int choice = Int32.Parse(Console.ReadLine());
 
-                farm.PlowingFields[choice - 1].AddResource(plant);
+                if (choice <= farm.PlowingFields.Count())
+                {
+                    farm.PlowingFields[choice - 1].AddResource(plant);
+                }
+                else if (choice > farm.PlowingFields.Count() && choice <= farm.PlowingFields.Count() + farm.NaturalFields.Count())
+                {
+                    farm.NaturalFields[choice - 1].AddResource(plant);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input.");
+                    Console.WriteLine("Press enter to return to main menu.  You suck.");
+                    Console.ReadLine();
+                }
 
                 /*
                     Couldn't get this to work. Can you?
