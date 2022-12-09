@@ -7,25 +7,18 @@ using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
-    public class ChooseEitherField
+    public class ChooseNaturalField
     {
         public static void CollectInput(Farm farm, ISeedProducing plant)
         {
             Utils.Clear();
-            if (farm.PlowingFields.Count > 0 || farm.NaturalFields.Count > 0)
+            if (farm.NaturalFields.Count > 0)
             {
-                for (int i = 0; i < farm.PlowingFields.Count; i++)
-                {
-                    int plantCount = farm.PlowingFields[i].rows.Count();
-
-                    Console.WriteLine($"{i + 1}. Plowing Field ({plantCount} rows of plants).");
-                }
-
                 for (int i = 0; i < farm.NaturalFields.Count; i++)
                 {
                     int plantCount = farm.NaturalFields[i].rows.Count();
 
-                    Console.WriteLine($"{i + 1 + farm.PlowingFields.Count}. Natural Field ({plantCount} rows of plants).");
+                    Console.WriteLine($"{i + 1}. Natural Field ({plantCount} rows of plants).");
                 }
 
                 Console.WriteLine();
@@ -36,26 +29,7 @@ namespace Trestlebridge.Actions
                 Console.Write("> ");
                 int choice;
                 bool stuff = Int32.TryParse(Console.ReadLine(), out choice);
-
-                if (stuff && choice <= farm.PlowingFields.Count())
-                {
-                    if(farm.PlowingFields[choice-1].Capacity == 0) {
-                        Console.WriteLine("Field full come back later");
-                        Console.ReadLine();
-                    }
-                    else {
-                        List<ISeedProducing> plantsToPass = new List<ISeedProducing>();
-                        plantsToPass.Add(plant);
-                        plantsToPass.Add(plant);
-                        plantsToPass.Add(plant);
-                        plantsToPass.Add(plant);
-                        plantsToPass.Add(plant);
-                        farm.PlowingFields[choice - 1].AddResource(plantsToPass);
-                
-                    }
-                }
-                else if (stuff && choice > farm.PlowingFields.Count() && choice <= farm.PlowingFields.Count() + farm.NaturalFields.Count())
-                {
+                if(stuff && choice > 0 && choice <= farm.NaturalFields.Count) {
                     if(farm.NaturalFields[choice-1].Capacity == 0) {
                         Console.WriteLine("Field full come back later");
                         Console.ReadLine();
@@ -72,10 +46,8 @@ namespace Trestlebridge.Actions
                 
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Invalid input.");
-                    Console.WriteLine("Press enter to return to main menu.  You suck.");
+                else {
+                    Console.WriteLine("Invalid input");
                     Console.ReadLine();
                 }
 
@@ -87,7 +59,7 @@ namespace Trestlebridge.Actions
             }
             else
             {
-                Console.WriteLine("No plowing fields present.  Please add a plowing field and try again.");
+                Console.WriteLine("No Natural fields present.  Please add a Natural field and try again.");
                 Console.WriteLine("Press enter to continue.");
                 Console.ReadLine();
             }

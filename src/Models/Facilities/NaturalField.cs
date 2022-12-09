@@ -9,6 +9,8 @@ namespace Trestlebridge.Models.Facilities
     public class NaturalField : IFacility<ISeedProducing>
     {
         private int _capacity = 60;
+
+        public List<List<ISeedProducing>> rows {get;} = new List<List<ISeedProducing>>();
         private Guid _id = Guid.NewGuid();
 
         private List<ISeedProducing> _plants = new List<ISeedProducing>();
@@ -33,7 +35,8 @@ namespace Trestlebridge.Models.Facilities
 
         public void AddResource(List<ISeedProducing> plants)
         {
-            _plants.AddRange(plants);
+             rows.Add(plants);
+            _capacity -= 6;
         }
 
         public override string ToString()
@@ -41,8 +44,13 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this._plants.Count} plants\n");
-            this._plants.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Natural field {shortId} has {this.rows.Count} rows of plants\n");
+            foreach(List<ISeedProducing> row in rows) {
+                foreach(ISeedProducing plant in row) {
+                    output.Append(plant);
+                }
+                
+            }
 
             return output.ToString();
         }
