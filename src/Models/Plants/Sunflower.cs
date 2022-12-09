@@ -3,11 +3,12 @@ using Trestlebridge.Interfaces;
 
 namespace Trestlebridge.Models.Plants
 {
-    public class Sesame : IResource, ISeedProducing
+    public class Sunflower : IResource, ISeedProducing
     {
         private Guid _id = Guid.NewGuid();
-        private int _seedsProduced = 520;
-        public string Type { get; } = "Sesame";
+        private int _seedsProduced = 650;
+        private double _compostProduced = 21.6;
+        public string Type { get; } = "Sunflower";
         private string _shortId
         {
             get
@@ -23,7 +24,7 @@ namespace Trestlebridge.Models.Plants
 
         public override string ToString()
         {
-            return $"Sesame {this._shortId} is super yummy!";
+            return $"Sunflower {this._shortId} is super neat looking!";
         }
 
     }

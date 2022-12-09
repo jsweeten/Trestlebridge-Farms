@@ -8,11 +8,12 @@ namespace Trestlebridge.Models.Facilities
 {
     public class PlowingField : IFacility<ISeedProducing>
     {
-        private int _capacity = 50;
+        private int _capacity = 65;
         private Guid _id = Guid.NewGuid();
 
         private List<ISeedProducing> _plants = new List<ISeedProducing>();
 
+        public List<List<ISeedProducing>> rows {get;} = new List<List<ISeedProducing>>();
         public int CountPlants()
         {
             return _plants.Count;
@@ -33,7 +34,8 @@ namespace Trestlebridge.Models.Facilities
 
         public void AddResource(List<ISeedProducing> plants)
         {
-            _plants.AddRange(plants);
+            rows.Add(plants);
+            _capacity -= 5;
         }
 
         public override string ToString()
@@ -41,8 +43,7 @@ namespace Trestlebridge.Models.Facilities
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Plowing field {shortId} has {this._plants.Count} plants\n");
-            this._plants.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Plowing field {shortId} has {this.rows.Count} rows of plants\n");
 
             return output.ToString();
         }
