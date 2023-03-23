@@ -7,7 +7,7 @@ using Trestlebridge.Models.Interfaces;
 
 namespace Trestlebridge.Models.Animals
 {
-    public class Cow : IGrazing
+    public class Chicken : IAnimal
     {
         // Fields
         private Guid _id;
@@ -18,14 +18,16 @@ namespace Trestlebridge.Models.Animals
         public Dictionary<string, double> Product { get; set; }
 
         // Constructor
-        public Cow()
+        public Chicken()
         {
             _id = Guid.NewGuid();
-            FeedPerDay = 5.4;
-            Location = "Grazing Fields";
+            FeedPerDay = 0.9;
+            Location = "Chicken House";
             Product = new()
             {
-                {"Meat", 18.25}
+                {"Eggs", 7.0},
+                {"Feather", 0.5},
+                {"Meat", 1.7}
             };
         }
 

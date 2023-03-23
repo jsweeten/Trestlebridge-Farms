@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Interfaces;
 using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Models

@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Trestlebridge.Models.Interfaces
+{
+    public interface IResource
+    {
+        Dictionary<string, double> Product { get; set; }
+        string Location { get; set; }
+    }
+}
