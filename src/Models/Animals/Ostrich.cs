@@ -1,33 +1,36 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Trestlebridge.Interfaces;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Trestlebridge.Models.Interfaces;
 
-namespace Trestlebridge.Models.Animals {
-    public class Ostrich : IResource, IGrazing, IMeatProducing {
+namespace Trestlebridge.Models.Animals
+{
+    public class Ostrich : IGrazing
+    {
+        // Fields
+        private Guid _id;
 
-        private Guid _id = Guid.NewGuid();
-        private double _meatProduced = 2.6;
+        // Properties
+        public double FeedPerDay { get; set; }
+        public string Location { get; set; }
+        public Dictionary<string, double> Product { get; set; }
 
-        private string _shortId {
-            get {
-                return this._id.ToString().Substring(this._id.ToString().Length - 6);
-            }
+        // Constructor
+        public Ostrich()
+        {
+            _id = Guid.NewGuid();
+            FeedPerDay = 2.3;
+            Location = "Grazing Fields";
+            Product = new()
+            {
+                {"Meat", 2.6},
+                {"Eggs", 3.0}
+            };
         }
-
-        public double GrassPerDay { get; set; } = 2.3;
-        public string Type { get; } = "Ostrich";
 
         // Methods
-        public void Graze () {
-            Console.WriteLine($"Ostrich {this._shortId} just ate {this.GrassPerDay}kg of grass");
-        }
 
-        public double Butcher () {
-            return _meatProduced;
-        }
-
-        public override string ToString () {
-            return $"Ostrich {this._shortId}. Squack!";
-        }
     }
 }

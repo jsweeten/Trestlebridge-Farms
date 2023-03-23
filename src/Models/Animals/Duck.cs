@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using Trestlebridge.Models.Interfaces;
 
 namespace Trestlebridge.Models.Animals
 {
-    public class Cow : IGrazing
+    public class Duck : IAnimal
     {
         // Fields
         private Guid _id;
@@ -18,14 +19,15 @@ namespace Trestlebridge.Models.Animals
         public Dictionary<string, double> Product { get; set; }
 
         // Constructor
-        public Cow()
+        public Duck()
         {
-            _id = Guid.NewGuid();
-            FeedPerDay = 5.4;
-            Location = "Grazing Fields";
+            Guid _id = Guid.NewGuid();
+            Location = "Duck House";
+            FeedPerDay = 0.8;
             Product = new()
             {
-                {"Meat", 18.25}
+                {"Eggs", 6},
+                {"Feathers", 0.75}
             };
         }
 
