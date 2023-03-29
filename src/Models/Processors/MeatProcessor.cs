@@ -1,19 +1,23 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Trestlebridge.Models.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Trestlebridge.Models.Animals;
 
-//namespace Trestlebridge.Models.Processors
-//{
-//    public class MeatProcessor : IProcessor
-//    {
-//        public int Amount = 7;
+namespace Trestlebridge.Models.Processors
+{
+    public class MeatProcessor : IProcessor
+    {
+        public int Capacity { get; set; }
 
-//        public IAnimal Process(IAnimal animal)
-//        {
-//            return animal.Product
-//        }
-//    }
-//}
+        public MeatProcessor()
+        {
+            Capacity = 7;
+        }
+        public void Process(IResource animal, int count)
+        {
+            
+        }
+    }
+}

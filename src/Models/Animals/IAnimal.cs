@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trestlebridge.Models.Interfaces
+namespace Trestlebridge.Models.Animals
 {
     public interface IAnimal : IResource
     {

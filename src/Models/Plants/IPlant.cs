@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trestlebridge.Models.Interfaces
+namespace Trestlebridge.Models.Plants
 {
-    public interface IGrazing : IAnimal
+    public interface IPlant : IResource
     {
 
     }

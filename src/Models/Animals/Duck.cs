@@ -4,7 +4,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Trestlebridge.Models.Interfaces;
+using Trestlebridge.Models.Animals;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Models.Animals
 {
@@ -15,14 +16,14 @@ namespace Trestlebridge.Models.Animals
 
         // Properties
         public double FeedPerDay { get; set; }
-        public string Location { get; set; }
+        public IFacility Location { get; set; }
         public Dictionary<string, double> Product { get; set; }
 
         // Constructor
-        public Duck()
+        public Duck(DuckHouse duckhouse)
         {
-            Guid _id = Guid.NewGuid();
-            Location = "Duck House";
+            _id = Guid.NewGuid();
+            Location = duckhouse;
             FeedPerDay = 0.8;
             Product = new()
             {
