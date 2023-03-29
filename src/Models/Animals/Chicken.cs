@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Trestlebridge.Models.Interfaces;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Models.Animals
 {
@@ -14,15 +14,15 @@ namespace Trestlebridge.Models.Animals
 
         // Properties
         public double FeedPerDay { get; set; }
-        public string Location { get; set; }
+        public IFacility Location { get; set; }
         public Dictionary<string, double> Product { get; set; }
 
         // Constructor
-        public Chicken()
+        public Chicken(ChickenCoop chickenCoop)
         {
             _id = Guid.NewGuid();
+            Location = chickenCoop;
             FeedPerDay = 0.9;
-            Location = "Chicken House";
             Product = new()
             {
                 {"Eggs", 7.0},
