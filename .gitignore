@@ -8,5 +8,6 @@ obj
 *.sqlite3
 .vs
 .vscode
+.vs
 dist
 /.vs/Trestlebridge/FileContentIndex/read.lock

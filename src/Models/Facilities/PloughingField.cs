@@ -7,7 +7,7 @@ using Trestlebridge.Models.Plants;
 
 namespace Trestlebridge.Models.Facilities
 {
-    public class PlowingField : IPlantField
+    public class PloughingField : IPlantField
     {
         // Fields
         private Guid _id;
@@ -41,7 +41,7 @@ namespace Trestlebridge.Models.Facilities
         }
 
         // Constructor
-        public PlowingField(string name)
+        public PloughingField(string name)
         {
             _id = Guid.NewGuid();
             Name = name;
