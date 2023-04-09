@@ -14,16 +14,16 @@ namespace Trestlebridge.Models.Animals
 
         // Properties
         public double FeedPerDay { get; set; }
-        public IFacility Location { get; set; }
+        public string Location { get; set; }
         public Dictionary<string, double> Product { get; set; }
 
 
         // Constructor
-        public Goat(GrazingField field)
+        public Goat()
         {
             _id = Guid.NewGuid();
             FeedPerDay = 4.1;
-            Location = field;
+            Location = "Grazing Field";
             Product = new()
             {
                 {"Compost", 7.5}

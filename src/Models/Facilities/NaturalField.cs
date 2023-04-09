@@ -43,10 +43,9 @@ namespace Trestlebridge.Models.Facilities
         }
 
         // Constructor
-        public NaturalField(string name)
+        public NaturalField()
         {
             _id = Guid.NewGuid();
-            Name = name;
             rows = 10;
             plantsPerRow = 6;
             Capacity = rows * plantsPerRow;

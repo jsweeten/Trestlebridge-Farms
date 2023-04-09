@@ -13,14 +13,14 @@ namespace Trestlebridge.Models.Plants
         private Guid _id;
 
         // Properties
-        public IFacility Location { get; set; }
+        public string Location { get; set; }
         public Dictionary<string, double> Product { get; set; }
 
         // Constructor
-        public Sunflower(IPlantField field)
+        public Sunflower()
         {
             _id = Guid.NewGuid();
-            Location = field;
+            Location = "Ploughing or Natural Field";
             Product = new()
             {
                 {"Compost", 650},
