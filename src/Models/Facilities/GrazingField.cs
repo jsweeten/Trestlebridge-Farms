@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Models.Facilities
 {
@@ -39,10 +35,9 @@ Please lower your amount or add another facility.");
         }
 
         // Constructor
-        public GrazingField(string name)
+        public GrazingField()
         {
             _id = Guid.NewGuid();
-            Name = name;
             Capacity = 20;
             CurrentAmount = 0;
         }

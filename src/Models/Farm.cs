@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Trestlebridge.Models.Facilities;
+using Trestlebridge.Models.Animals;
+using Trestlebridge.Models.Plants;
 
 namespace Trestlebridge.Models
 {
     public class Farm
     {
         // Properties
-        public string Name { get; set; }
-        public List<GrazingField> GrazingFields { get; } = new List<GrazingField>();
-        public List<PlowingField> PlowingFields { get; } = new List<PlowingField>();
-        public List<NaturalField> NaturalFields { get; } = new List<NaturalField>();
+        public List<PloughingField> PloughingFields { get; set; } = new List<PloughingField>();
+        public List<GrazingField> GrazingFields { get; set; } = new List<GrazingField>();
+        public List<NaturalField> NaturalFields { get; set; } = new List<NaturalField>();
+        public List<ChickenCoop> ChickenCoops { get; set; } = new List<ChickenCoop>();
+        public List<DuckHouse> DuckHouses { get; set; } = new List<DuckHouse>();
         internal int Meat { get; set; }
         internal int Eggs { get; set; }
         internal int Feathers { get; set; }
@@ -25,33 +28,48 @@ namespace Trestlebridge.Models
         internal int Pigs { get; set; }
         internal int Sheep { get; set; }
 
+        private List<IFacility> Facilities { get; }
+        private List<IAnimal> Animals { get; }
+        private List<IPlant> Plants { get; }
         // Constructor
 
-        public Farm()
-        {
-            Name = "Trestlebridge Farm";
-            GrazingFields = new List<GrazingField>();
-            PlowingFields = new List<PlowingField>();
-            NaturalFields = new List<NaturalField>();
-            Meat = 0;
-            Eggs = 0;
-            Feathers = 0;
-            Compost = 0;
-            Seeds = 0;
-            Cows = 0;
-            Chickens = 0;
-            Ducks = 0;
-            Goats = 0;
-            Ostriches = 0;
-            Pigs = 0;
-            Sheep = 0;
-        }
+        //public Farm()
+        //{
+        //    GrazingFields = new();
+        //    PloughingFields = new();
+        //    NaturalFields = new();
+        //    ChickenCoops = new();
+        //    DuckHouses = new();
+        //    Meat = 0;
+        //    Eggs = 0;
+        //    Feathers = 0;
+        //    Compost = 0;
+        //    Seeds = 0;
+        //    Cows = 0;
+        //    Chickens = 0;
+        //    Ducks = 0;
+        //    Goats = 0;
+        //    Ostriches = 0;
+        //    Pigs = 0;
+        //    Sheep = 0;
+        //}
 
         public void InventoryReport()
         {
             Console.Write($@"
     Here's your inventory report:
     -----------------------------
+    
+    Facilities
+    
+    Grazing Fields: {GrazingFields.Count}
+    Natural Fields: {NaturalFields.Count}
+    Ploughed Fields: {PloughingFields.Count}
+    Chicken Coops: {ChickenCoops.Count}
+    Duck Houses: {DuckHouses.Count}
+
+    Resources
+
     Meat: {Meat}
     Egg: {Eggs}
     Feather: {Feathers}
@@ -63,7 +81,11 @@ namespace Trestlebridge.Models
     Ostriches: {Ostriches}
     Pigs: {Pigs}
     Sheep: {Sheep}
-    -----------------------------");
+
+    -----------------------------
+
+    Press any key to continue...");
+            Console.ReadKey();
         }
 
         /*
@@ -114,14 +136,21 @@ namespace Trestlebridge.Models
         {
             GrazingFields.Add(field);
         }
-
-        public void AddPlowingField(PlowingField field)
+        public void AddPloughingField(PloughingField field)
         {
-            PlowingFields.Add(field);
+            PloughingFields.Add(field);
         }
         public void AddNaturalField(NaturalField field)
         {
             NaturalFields.Add(field);
+        }
+        public void AddChickenCoop(ChickenCoop coop)
+        {
+            ChickenCoops.Add(coop);
+        }
+        public void AddDuckHouse(DuckHouse house)
+        {
+            DuckHouses.Add(house);
         }
 
         //public override string ToString()

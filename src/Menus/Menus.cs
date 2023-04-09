@@ -1,44 +1,107 @@
 ﻿using System;
+using Trestlebridge.Models;
+using Trestlebridge.Models.Facilities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Trestlebridge.Menus
 {
     public class Menus
     {
-        
         // Main Menu
-        public static void MainMenu()
+        public static void MainMenu(Farm Trestlebridge)
         {
+            Utils.Clear();
             Console.WriteLine();
             Console.WriteLine("1. Create Facility");
             Console.WriteLine("2. Purchase Animals");
             Console.WriteLine("3. Purchase Seeds");
             Console.WriteLine("4. Processing Options");
             Console.WriteLine();
-            Console.WriteLine("0. End Simulation");
+            Console.WriteLine("0. Inventory");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Choose A FARMS Option:");
+            int input = Int32.Parse(Console.ReadLine());
+
+            switch (input)
+            {
+                case 1:
+                    Utils.Clear();
+                    FacilityMenu(Trestlebridge);
+                    break;
+                case 2:
+                    Utils.Clear();
+                    AnimalPurchaseMenu(Trestlebridge);
+                    break;
+                case 3:
+                    Utils.Clear();
+                    SeedPurchaseMenu(Trestlebridge);
+                    break;
+                case 4:
+                    Utils.Clear();
+                    ProcessingMenu(Trestlebridge);
+                    break;
+                case 0:
+                    Utils.Clear();
+                    Trestlebridge.InventoryReport();
+                    break;
+            }
         }
 
         // Create Facility Menu
-        public static void FacilityMenu()
+        public static void FacilityMenu(Farm Trestlebridge)
         {
             Console.WriteLine();
-            Console.WriteLine("1. Grazing Field");
-            Console.WriteLine("2. Ploughed Field");
-            Console.WriteLine("3. Natural Field");
-            Console.WriteLine("4. Chicken House");
-            Console.WriteLine("4. Duck House");
+            Console.WriteLine("1. Grazing Field:");
+            Console.WriteLine("Stores: Cows, Pigs, Goats, and Ostriches");
+            Console.WriteLine("Capacity: 20");
+            Console.WriteLine();
+            Console.WriteLine("2. Ploughed Field:");
+            Console.WriteLine("Stores: Sunflowers and Sesame");
+            Console.WriteLine("Capacity: 13 rows of plants, 5 plants per row");
+            Console.WriteLine();
+            Console.WriteLine("3. Natural Field:");
+            Console.WriteLine("Stores: Sunflowers and Wildflowers");
+            Console.WriteLine("Capacity: 10 rows, 6 plants per row");
+            Console.WriteLine();
+            Console.WriteLine("4. Chicken House:");
+            Console.WriteLine("Stores: Chickens");
+            Console.WriteLine("Capacity: 15");
+            Console.WriteLine();
+            Console.WriteLine("4. Duck House:");
+            Console.WriteLine("Stores: Ducks");
+            Console.WriteLine("Capacity: 12");
             Console.WriteLine();
             Console.WriteLine("Choose a facility to create:");
+            int input = Int32.Parse(Console.ReadLine());
+
+            switch (input)
+            {
+                case 1:
+                    Utils.Clear();
+                    var field = new GrazingField();
+                    Trestlebridge.AddGrazingField(field);
+                    Console.WriteLine("New Grazing Field Added.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    break;
+                case 2:
+                    Utils.Clear();
+                    
+                    break;
+                case 3:
+                    Utils.Clear();
+                    
+                    break;
+                case 4:
+                    Utils.Clear();
+                    
+                    break;
+            }
         }
 
         //Animal Purchase Menu
-        public static void AnimalPurchaseMenu()
+        public static void AnimalPurchaseMenu(Farm Trestlebridge)
         {
             Console.WriteLine();
             Console.WriteLine("1. Chicken");
@@ -53,7 +116,7 @@ namespace Trestlebridge.Menus
         }
 
         //Seed Purchase Menu
-        public static void SeedPurchaseMenu()
+        public static void SeedPurchaseMenu(Farm Trestlebridge)
         {
             Console.WriteLine();
             Console.WriteLine("1. Sesame");
@@ -64,7 +127,7 @@ namespace Trestlebridge.Menus
         }
 
         //Processing Menu
-        public static void ProcessingMenu()
+        public static void ProcessingMenu(Farm Trestlebridge)
         {
             Console.WriteLine();
             Console.WriteLine("1. Seed Harvester");
