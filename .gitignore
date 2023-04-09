@@ -6,6 +6,7 @@ bin
 obj
 *.db
 *.sqlite3
+.vs
 .vscode
 dist
 /.vs/Trestlebridge/FileContentIndex/read.lock
