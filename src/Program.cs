@@ -28,42 +28,12 @@ namespace Trestlebridge
 
             Farm Trestlebridge = new Farm();
 
-            DisplayBanner();
-
             bool ExecuteProgram = true;
 
             while (ExecuteProgram)
             {
-                Menus.Menus.MainMenu();
-                int input = Int32.Parse(Console.ReadLine());
-
-                switch (input)
-                {
-                    case 0:
-                        Utils.Clear();
-                        Menus.Menus.MainMenu();
-                        break;
-                    case 1:
-                        Utils.Clear();
-                        Menus.Menus.FacilityMenu();
-                        break;
-                    case 2:
-                        Utils.Clear();
-                        Menus.Menus.AnimalPurchaseMenu();
-                        break;
-                    case 3:
-                        Utils.Clear();
-                        Menus.Menus.SeedPurchaseMenu();
-                        break;
-                    case 4:
-                        Utils.Clear();
-                        Menus.Menus.ProcessingMenu();
-                        break;
-                    default:
-                        Console.WriteLine("Invalid input! Try again...");
-                        Menus.Menus.MainMenu();
-                        break;
-                }
+                DisplayBanner();
+                Menus.Menus.MainMenu(Trestlebridge);
             }
         }
     }

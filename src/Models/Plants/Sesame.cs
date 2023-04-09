@@ -17,7 +17,7 @@ namespace Trestlebridge.Models.Plants
         public Dictionary<string, double> Product { get; set; }
 
         // Constructor
-        public Sesame(PlowingField field)
+        public Sesame(PloughingField field)
         {
             _id = Guid.NewGuid();
             Location = field;
