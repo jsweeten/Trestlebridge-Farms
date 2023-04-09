@@ -13,7 +13,6 @@ namespace Trestlebridge.Models.Facilities
         private Guid _id;
 
         // Properties
-        public string Name { get; set; }
         public int Capacity { get; }
         public int CurrentAmount { get; set; }
 
@@ -39,10 +38,9 @@ Please lower your amount or add another facility.");
         }
 
         // Constructor
-        public ChickenCoop(string name)
+        public ChickenCoop()
         {
             _id = Guid.NewGuid();
-            Name = name;
             Capacity = 15;
             CurrentAmount = 0;
         }

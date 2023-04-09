@@ -19,7 +19,8 @@ namespace Trestlebridge.Models
         internal int Eggs { get; set; }
         internal int Feathers { get; set; }
         internal int Compost { get; set; }
-        internal int Seeds { get; set; }
+        internal int SesameSeeds { get; set; }
+        internal int SunflowerSeeds { get; set; }
         internal int Cows { get; set; }
         internal int Chickens { get; set; }
         internal int Ducks { get; set; }
@@ -27,32 +28,39 @@ namespace Trestlebridge.Models
         internal int Ostriches { get; set; }
         internal int Pigs { get; set; }
         internal int Sheep { get; set; }
+        internal int Sunflower { get; set; }
+        internal int Sesame { get; set; }
+        internal int Wildflower { get; set; }
 
         private List<IFacility> Facilities { get; }
         private List<IAnimal> Animals { get; }
         private List<IPlant> Plants { get; }
         // Constructor
 
-        //public Farm()
-        //{
-        //    GrazingFields = new();
-        //    PloughingFields = new();
-        //    NaturalFields = new();
-        //    ChickenCoops = new();
-        //    DuckHouses = new();
-        //    Meat = 0;
-        //    Eggs = 0;
-        //    Feathers = 0;
-        //    Compost = 0;
-        //    Seeds = 0;
-        //    Cows = 0;
-        //    Chickens = 0;
-        //    Ducks = 0;
-        //    Goats = 0;
-        //    Ostriches = 0;
-        //    Pigs = 0;
-        //    Sheep = 0;
-        //}
+        public Farm()
+        {
+            GrazingFields = new();
+            PloughingFields = new();
+            NaturalFields = new();
+            ChickenCoops = new();
+            DuckHouses = new();
+            Meat = 0;
+            Eggs = 0;
+            Feathers = 0;
+            Compost = 0;
+            SesameSeeds = 0;
+            SunflowerSeeds = 0;
+            Cows = 0;
+            Chickens = 0;
+            Ducks = 0;
+            Goats = 0;
+            Ostriches = 0;
+            Pigs = 0;
+            Sheep = 0;
+            Sesame = 0;
+            Sunflower = 0;
+            Wildflower = 0;
+        }
 
         public void InventoryReport()
         {
@@ -63,12 +71,21 @@ namespace Trestlebridge.Models
     Facilities
     
     Grazing Fields: {GrazingFields.Count}
-    Natural Fields: {NaturalFields.Count}
-    Ploughed Fields: {PloughingFields.Count}
-    Chicken Coops: {ChickenCoops.Count}
-    Duck Houses: {DuckHouses.Count}
+    Total Capacity: {GrazingFields.Count * 20}
 
-    Resources
+    Natural Fields: {NaturalFields.Count}
+    Total Capacity: {NaturalFields.Count * 10}
+
+    Ploughed Fields: {PloughingFields.Count}
+    Total Capacity: {PloughingFields.Count * 13}
+
+    Chicken Coops: {ChickenCoops.Count}
+    Total Capacity: {ChickenCoops.Count * 15}
+
+    Duck Houses: {DuckHouses.Count}
+    Total Capacity: {DuckHouses.Count * 12}
+
+    Animals
 
     Meat: {Meat}
     Egg: {Eggs}
@@ -81,6 +98,12 @@ namespace Trestlebridge.Models
     Ostriches: {Ostriches}
     Pigs: {Pigs}
     Sheep: {Sheep}
+
+    Plants
+
+    Sunflower: {Sunflower * 6}
+    Sesame: {Sesame * 5}
+    Wildflower: {Wildflower * 6}
 
     -----------------------------
 

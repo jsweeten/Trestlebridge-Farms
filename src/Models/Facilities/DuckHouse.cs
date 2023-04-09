@@ -38,10 +38,9 @@ Please lower your amount or add another facility.");
         }
 
         // Constructor
-        public DuckHouse(string name)
+        public DuckHouse()
         {
             _id = Guid.NewGuid();
-            Name = name;
             Capacity = 12;
             CurrentAmount = 0;
         }

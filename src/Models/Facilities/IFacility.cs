@@ -8,7 +8,6 @@ namespace Trestlebridge.Models.Facilities
 {
     public interface IFacility
     {
-        string Name { get; set; }
         int Capacity { get; }
         int CurrentAmount { get; set; }
         void AddResource(IResource resource, int amount);

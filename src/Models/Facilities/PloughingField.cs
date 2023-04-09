@@ -41,10 +41,9 @@ namespace Trestlebridge.Models.Facilities
         }
 
         // Constructor
-        public PloughingField(string name)
+        public PloughingField()
         {
             _id = Guid.NewGuid();
-            Name = name;
             rows = 13;
             plantsPerRow = 5;
             Capacity = rows * plantsPerRow;

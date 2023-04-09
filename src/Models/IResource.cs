@@ -10,6 +10,6 @@ namespace Trestlebridge.Models
     public interface IResource
     {
         Dictionary<string, double> Product { get; set; }
-        IFacility Location { get; set; }
+        string Location { get; set; }
     }
 }
