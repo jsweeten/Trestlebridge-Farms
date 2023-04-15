@@ -14,7 +14,7 @@ namespace Trestlebridge.Models
         public Dictionary<IFacility, int> Facilities { get; set; }
         public Dictionary<IAnimal, int> Animals { get; set; }
         public Dictionary<IPlant, int> Plants { get; set; }
-        public Dictionary<ProductInventory, int> Products { get; set; }
+        public ProductInventory Products { get; set; }
 
         // Constructor
 
@@ -39,12 +39,21 @@ namespace Trestlebridge.Models
                 { new Sheep(), 0 }
             };
             Plants = new()
-                            {
+            {
                 { new Wildflower(), 0},
                 { new Sunflower(), 0 },
                 { new Sesame(), 0 }
             };
-            Products = new();
+            Products = new()
+            {
+                Meat = 0,
+                Eggs = 0,
+                Feathers = 0,
+                SunflowerSeeds = 0,
+                SesameSeeds = 0,
+                Compost = 0
+            };
+
         }
 
         public void InventoryReport()
@@ -79,12 +88,13 @@ namespace Trestlebridge.Models
             
             Console.WriteLine();
             Console.WriteLine("Products for Sale");
-            Console.WriteLine();
-            foreach (var Product in Products)
-            {
-                Console.WriteLine($"{Product.Key}: {Product.Value}");
-            }
-
+            Console.WriteLine(); 
+            Console.WriteLine($"Meat: {Products.Meat}");
+            Console.WriteLine($"Eggs: {Products.Eggs}");
+            Console.WriteLine($"Feathers: {Products.Feathers}");
+            Console.WriteLine($"Compost: {Products.Compost}");
+            Console.WriteLine($"Sunflower Seeds: {Products.SunflowerSeeds}");
+            Console.WriteLine($"Sesame Seeds: {Products.SesameSeeds}");
             Console.WriteLine();
             Console.WriteLine("-----------------------------");
             Console.WriteLine();

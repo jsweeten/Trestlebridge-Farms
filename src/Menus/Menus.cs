@@ -5,6 +5,7 @@ using Trestlebridge.Models.Animals;
 using System.Collections.Generic;
 using Trestlebridge.Models.Plants;
 using System.Linq;
+using System.Reflection;
 
 namespace Trestlebridge.Menus
 {
@@ -643,11 +644,12 @@ namespace Trestlebridge.Menus
                         int amount = Int32.Parse(Console.ReadLine());
                         
                         Trestlebridge.Plants[ChosenPlant.Key] =- amount;
-                        
-                        foreach (var product in  ChosenPlant.Key.Product)
+
+                        foreach (var product in ChosenPlant.Key.Product)
                         {
-                            Trestlebridge.Products[product.Key] =+ amount;
+                            PropertyInfo p = Trestlebridge.Products.p;
                         }
+                        Trestlebridge.Products =+ ChosenPlant.Key.Product * amount;
 
                         Console.WriteLine("Transaction Complete!");
                         break;
