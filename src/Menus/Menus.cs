@@ -5,6 +5,7 @@ using Trestlebridge.Models.Animals;
 using System.Collections.Generic;
 using Trestlebridge.Models.Plants;
 using System.Linq;
+using System.Reflection;
 
 namespace Trestlebridge.Menus
 {
@@ -621,32 +622,46 @@ namespace Trestlebridge.Menus
                         foreach (var plant in ploughedFieldList)
                         {
                             Console.WriteLine($"{i}. {plant.Key}");
-                            Console.WriteLine($"Produces {plant.Key.Product}");
                             Console.WriteLine();
+                            Console.WriteLine("Each plant produces:");
+                            Console.WriteLine();
+                            foreach (var product in plant.Key.Product)
+                            {
+                                Console.WriteLine($"{product.Value} {product.Key}");
+                            }
                             i++;
                         }
                         Console.Write("Choose a plant to harvest from the list above: ");
                         input = Int32.Parse(Console.ReadLine());
-
+                        var ChosenPlant = new KeyValuePair<IPlant, int>();
                         for (int j = 0; j < ploughedFieldList.Count; j++)
                         {
-                            var ChosenPlant = ploughedFieldList.Keys.FirstOrDefault();
-                            Console.WriteLine($"You chose {ChosenPlant}");
-                            Console.WriteLine("How many would you like to harvest?");
-                            int amount = Int32.Parse(Console.ReadLine());
-
-                            Trestlebridge.Plants[ChosenPlant] = -amount;
-                            Trestlebridge.Products.
+                            ChosenPlant = ploughedFieldList.ElementAt(j);
+                            Console.WriteLine($"You chose {ChosenPlant.Key}");
                         }
+                        
+                        Console.WriteLine("How many would you like to harvest?");
+                        int amount = Int32.Parse(Console.ReadLine());
+                        
+                        Trestlebridge.Plants[ChosenPlant.Key] =- amount;
 
+                        foreach (var product in ChosenPlant.Key.Product)
+                        {
+                            PropertyInfo p = Trestlebridge.Products.p;
+                        }
+                        Trestlebridge.Products =+ ChosenPlant.Key.Product * amount;
+
+                        Console.WriteLine("Transaction Complete!");
+                        break;
                     }
                     else
                     {
                         Console.WriteLine("Improper input. Please try again.");
                         break;
                     }
-            
-                case 2: Console.WriteLine();
+                    break;
+                case 2:
+                    Console.WriteLine();
                     break;
                 //case 3: Console.WriteLine();
                 //    break;
