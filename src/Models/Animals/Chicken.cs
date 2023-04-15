@@ -14,24 +14,24 @@ namespace Trestlebridge.Models.Animals
 
         // Properties
         public double FeedPerDay { get; set; }
-        public string Location { get; set; }
-        public Dictionary<string, double> Product { get; set; }
+        public IFacility Location { get; set; }
+        public Dictionary<ProductInventory, double> Product { get; set; }
+        public ProductInventory Eggs { get; }
+        public ProductInventory Meat { get; }
+        public ProductInventory Feathers { get; }
 
         // Constructor
         public Chicken()
         {
             _id = Guid.NewGuid();
-            Location = "Chicken Coop";
+            Location = new ChickenCoop();
             FeedPerDay = 0.9;
             Product = new()
             {
-                {"Eggs", 7.0},
-                {"Feather", 0.5},
-                {"Meat", 1.7}
+                {Eggs, 7.0},
+                {Feathers, 0.5},
+                {Meat, 1.7}
             };
         }
-
-        // Methods
-
     }
 }

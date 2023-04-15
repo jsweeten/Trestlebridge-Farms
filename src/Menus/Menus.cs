@@ -3,7 +3,8 @@ using Trestlebridge.Models;
 using Trestlebridge.Models.Facilities;
 using Trestlebridge.Models.Animals;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using Trestlebridge.Models.Plants;
+using System.Linq;
 
 namespace Trestlebridge.Menus
 {
@@ -80,40 +81,35 @@ namespace Trestlebridge.Menus
             switch (input)
             {
                 case 1:
-                    var grazeField = new GrazingField();
-                    Trestlebridge.AddGrazingField(grazeField);
+                    Trestlebridge.AddGrazingField();
                     Console.WriteLine("New Grazing Field Added.");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                     Utils.Clear();
                     break;
                 case 2:
-                    var ploughField = new PloughingField();
-                    Trestlebridge.AddPloughingField(ploughField);
+                    Trestlebridge.AddPloughingField();
                     Console.WriteLine("New Ploughing Field Added.");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                     Utils.Clear();
                     break;
                 case 3:
-                    var naturalField = new NaturalField();
-                    Trestlebridge.AddNaturalField(naturalField);
+                    Trestlebridge.AddNaturalField();
                     Console.WriteLine("New Natural Field Added.");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                     Utils.Clear();
                     break;
                 case 4:
-                    var chickenCoop = new ChickenCoop();
-                    Trestlebridge.AddChickenCoop(chickenCoop);
+                    Trestlebridge.AddChickenCoop();
                     Console.WriteLine("New Chicken Coop Added.");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                     Utils.Clear();
                     break;
                 case 5:
-                    var duckHouse = new DuckHouse();
-                    Trestlebridge.AddDuckHouse(duckHouse);
+                    Trestlebridge.AddDuckHouse();
                     Console.WriteLine("New Duck House Added.");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
@@ -125,17 +121,32 @@ namespace Trestlebridge.Menus
         //Animal Purchase Menu
         public static void AnimalPurchaseMenu(Farm Trestlebridge)
         {
-            int coopCapacity = Trestlebridge.ChickenCoops.Count * 15;
-            int coopSpace = coopCapacity - Trestlebridge.Chickens;
-            int duckHouseCapacity = Trestlebridge.DuckHouses.Count * 12;
-            int duckHouseSpace = duckHouseCapacity - Trestlebridge.Ducks;
-            int grazingFieldCapacity = Trestlebridge.GrazingFields.Count * 20;
+            Chicken c = new();
+            Duck d = new();
+            Cow cow = new();
+            Goat g = new();
+            Ostrich o = new();
+            Pig p = new();
+            Sheep s = new();
+            ChickenCoop coop = new();
+            DuckHouse dh = new();
+            GrazingField gf = new();
+            NaturalField nf = new();
+            PloughingField pf = new();
+
+            int ChickenInventory = Trestlebridge.Animals[c];
+            int DuckInventory = Trestlebridge.Animals[d];
+            int coopCapacity = Trestlebridge.Facilities[coop] * coop.Capacity;
+            int coopSpace = coopCapacity - Trestlebridge.Animals[c];
+            int duckHouseCapacity = Trestlebridge.Facilities[dh] * dh.Capacity;
+            int duckHouseSpace = duckHouseCapacity - Trestlebridge.Animals[d];
+            int grazingFieldCapacity = Trestlebridge.Facilities[gf] * gf.Capacity;
             int grazingFieldSpace = grazingFieldCapacity
-                - Trestlebridge.Cows
-                - Trestlebridge.Pigs
-                - Trestlebridge.Ostriches
-                - Trestlebridge.Sheep
-                - Trestlebridge.Goats;
+                - Trestlebridge.Animals[cow]
+                - Trestlebridge.Animals[p]
+                - Trestlebridge.Animals[o]
+                - Trestlebridge.Animals[s]
+                - Trestlebridge.Animals[g];
             Console.WriteLine();
             Console.WriteLine("1. Chicken");
             Console.WriteLine("2. Cow");
@@ -151,13 +162,13 @@ namespace Trestlebridge.Menus
             switch (input)
             {
                 case 1:
-                    if (Trestlebridge.ChickenCoops.Count == 0)
+                    if (Trestlebridge.Animals[c] == 0)
                     {
                         Console.WriteLine("You can't buy chickens until you purchase a chicken coop!");
                         Console.ReadKey();
                         break;
                     }
-                    else if (coopSpace == 0)
+                    else if ((coopCapacity - Trestlebridge.Animals[c]) == 0)
                     {
                         Console.WriteLine("Your chicken coops are at capacity!");
                         Console.ReadKey();
@@ -165,11 +176,11 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.ChickenCoops.Count} chicken coops and {Trestlebridge.Chickens} chickens.");
-                        Console.WriteLine($"You have space for {coopSpace} chickens.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[coop]} chicken coops and {Trestlebridge.Animals[c]} chickens.");
+                        Console.WriteLine($"You have space for {(coopCapacity - Trestlebridge.Animals[c])} chickens.");
                         Console.Write("How many chickens would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
-                        if (purchaseAmount > coopSpace)
+                        if (purchaseAmount > (coopCapacity - Trestlebridge.Animals[c]))
                         {
                             Console.WriteLine("You don't have room for that many chickens!");
                             Console.WriteLine("Please lower your purchase amount.");
@@ -178,16 +189,16 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                        Trestlebridge.Chickens += purchaseAmount;
-                        Console.WriteLine("Chickens Added!");
-                        Console.WriteLine("Press any key to continue...");
-                        Console.ReadKey();
-                        Utils.Clear();
-                        break;
+                            Trestlebridge.Animals[c] += purchaseAmount;
+                            Console.WriteLine("Chickens Added!");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            Utils.Clear();
+                            break;
                         }
                     }
                 case 2:
-                    if (Trestlebridge.GrazingFields.Count == 0)
+                    if (Trestlebridge.Facilities[gf] == 0)
                     {
                         Console.WriteLine("You can't purchase grazing animals until you purchase a grazing field!");
                         Console.ReadKey();
@@ -201,7 +212,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.GrazingFields.Count} grazing fields.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[gf]} grazing fields.");
                         Console.WriteLine($"You have space for {grazingFieldSpace} cows.");
                         Console.Write("How many cows would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -214,7 +225,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Cows += purchaseAmount;
+                            Trestlebridge.Animals[cow] += purchaseAmount;
                             Console.WriteLine("Cows Added! Moo!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -223,13 +234,13 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 3:
-                    if (Trestlebridge.DuckHouses.Count == 0)
+                    if (Trestlebridge.Facilities[dh] == 0)
                     {
                         Console.WriteLine("You can't buy ducks until you purchase a duck house!");
                         Console.ReadKey();
                         break;
                     }
-                    else if (coopSpace == 0)
+                    else if ((duckHouseCapacity - Trestlebridge.Facilities[dh]) == 0)
                     {
                         Console.WriteLine("Your duck houses are at capacity!");
                         Console.ReadKey();
@@ -237,7 +248,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.DuckHouses.Count} duck houses and {Trestlebridge.Ducks} ducks.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[dh]} duck houses and {Trestlebridge.Animals[d]} ducks.");
                         Console.WriteLine($"You have space for {duckHouseSpace} ducks.");
                         Console.Write("How many ducks would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -250,7 +261,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Ducks += purchaseAmount;
+                            Trestlebridge.Animals[d] += purchaseAmount;
                             Console.WriteLine("Ducks Added! Quack!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -259,7 +270,7 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 4:
-                    if (Trestlebridge.GrazingFields.Count == 0)
+                    if (Trestlebridge.Facilities[gf] == 0)
                     {
                         Console.WriteLine("You can't purchase grazing animals until you purchase a grazing field!");
                         Console.ReadKey();
@@ -273,7 +284,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.GrazingFields.Count} grazing fields.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[gf]} grazing fields.");
                         Console.WriteLine($"You have space for {grazingFieldSpace} goats.");
                         Console.Write("How many goats would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -286,7 +297,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Goats += purchaseAmount;
+                            Trestlebridge.Animals[g] += purchaseAmount;
                             Console.WriteLine("Goats Added! Baa?!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -295,7 +306,7 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 5:
-                    if (Trestlebridge.GrazingFields.Count == 0)
+                    if (Trestlebridge.Facilities[gf] == 0)
                     {
                         Console.WriteLine("You can't purchase grazing animals until you purchase a grazing field!");
                         Console.ReadKey();
@@ -309,9 +320,9 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.GrazingFields.Count} grazing fields.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[gf]} grazing fields.");
                         Console.WriteLine($"You have space for {grazingFieldSpace} ostriches.");
-                        Console.Write("How many cows would you like to purchase?  ");
+                        Console.Write("How many ostriches would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
                         if (purchaseAmount > grazingFieldSpace)
                         {
@@ -322,7 +333,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Ostriches += purchaseAmount;
+                            Trestlebridge.Animals[o] += purchaseAmount;
                             Console.WriteLine("Ostriches Added?!?!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -331,7 +342,7 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 6:
-                    if (Trestlebridge.GrazingFields.Count == 0)
+                    if (Trestlebridge.Facilities[gf] == 0)
                     {
                         Console.WriteLine("You can't purchase grazing animals until you purchase a grazing field!");
                         Console.ReadKey();
@@ -345,7 +356,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.GrazingFields.Count} grazing fields.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[gf]} grazing fields.");
                         Console.WriteLine($"You have space for {grazingFieldSpace} pigs.");
                         Console.Write("How many pigs would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -358,7 +369,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Pigs += purchaseAmount;
+                            Trestlebridge.Animals[p] += purchaseAmount;
                             Console.WriteLine("Pigs Added! Oink oink!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -367,7 +378,7 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 7:
-                    if (Trestlebridge.GrazingFields.Count == 0)
+                    if (Trestlebridge.Facilities[gf] == 0)
                     {
                         Console.WriteLine("You can't purchase grazing animals until you purchase a grazing field!");
                         Console.ReadKey();
@@ -381,7 +392,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.GrazingFields.Count} grazing fields.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[gf]} grazing fields.");
                         Console.WriteLine($"You have space for {grazingFieldSpace} sheep.");
                         Console.Write("How many sheep would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -394,7 +405,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Sheep += purchaseAmount;
+                            Trestlebridge.Animals[s] += purchaseAmount;
                             Console.WriteLine("Sheep Added! Baa!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -408,14 +419,20 @@ namespace Trestlebridge.Menus
         //Seed Purchase Menu
         public static void SeedPurchaseMenu(Farm Trestlebridge)
         {
-            int ploughedFieldCapacity = Trestlebridge.PloughingFields.Count * 13;
+            PloughingField pf = new();
+            NaturalField nf = new();
+            Sunflower sunflower = new();
+            Sesame sesame = new();
+            Wildflower wildflower = new();
+            
+            int ploughedFieldCapacity = Trestlebridge.Facilities[pf];
             int ploughedFieldSpace = ploughedFieldCapacity
-                - Trestlebridge.Sesame
-                - Trestlebridge.Sunflower;
-            int naturalFieldCapacity = Trestlebridge.NaturalFields.Count * 10;
+                - Trestlebridge.Plants[sunflower]
+                - Trestlebridge.Plants[sesame];
+            int naturalFieldCapacity = Trestlebridge.Facilities[nf] * nf.Capacity;
             int naturalFieldSpace = naturalFieldCapacity
-                - Trestlebridge.Wildflower
-                - Trestlebridge.Sunflower;
+                - Trestlebridge.Plants[sesame]
+                - Trestlebridge.Plants[sunflower];
 
             Console.WriteLine();
             Console.WriteLine("1. Sesame");
@@ -428,7 +445,7 @@ namespace Trestlebridge.Menus
             switch (input)
             {
                 case 1:
-                    if (Trestlebridge.PloughingFields.Count == 0)
+                    if (Trestlebridge.Facilities[pf] == 0)
                     {
                         Console.WriteLine("You can't sow sesame until you purchase a ploughed field!");
                         Console.ReadKey();
@@ -442,7 +459,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.PloughingFields.Count} ploughed fields and {Trestlebridge.Sesame * 5} sesame plants.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[pf]} ploughed fields and {Trestlebridge.Plants[sesame]} sesame plants.");
                         Console.WriteLine($"You have space for {ploughedFieldSpace} more sesame rows.");
                         Console.Write("How many rows of sesame plants would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -455,7 +472,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Sesame += purchaseAmount;
+                            Trestlebridge.Plants[sesame] += purchaseAmount;
                             Console.WriteLine("Sesame Added!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -464,8 +481,8 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 2:
-                    if (Trestlebridge.PloughingFields.Count == 0 &&
-                        Trestlebridge.NaturalFields.Count == 0)
+                    if (Trestlebridge.Facilities[pf] == 0 &&
+                        Trestlebridge.Facilities[nf] == 0)
                     {
                         Console.WriteLine("You can't sow sunflower until you purchase a field!");
                         Console.ReadKey();
@@ -479,8 +496,8 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.Write(@$"You currently have {Trestlebridge.PloughingFields.Count} ploughed fields,
-{Trestlebridge.NaturalFields.Count} natural fields, and {Trestlebridge.Sunflower * 5} sunflower plants.");
+                        Console.Write(@$"You currently have {Trestlebridge.Facilities[pf]} ploughed fields,
+{Trestlebridge.Facilities[nf]} natural fields, and {Trestlebridge.Plants[sunflower]} sunflower plants.");
                         Console.WriteLine($"You have space for {ploughedFieldSpace + naturalFieldSpace} more sunflower rows.");
                         Console.Write("How many rows of sunflower would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -493,7 +510,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Sunflower += purchaseAmount;
+                            Trestlebridge.Plants[sunflower] += purchaseAmount;
                             Console.WriteLine("Sunflower Added!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -502,7 +519,7 @@ namespace Trestlebridge.Menus
                         }
                     }
                 case 3:
-                    if (Trestlebridge.NaturalFields.Count == 0)
+                    if (Trestlebridge.Facilities[nf] == 0)
                     {
                         Console.WriteLine("You can't sow wildflower until you purchase a natural field!");
                         Console.ReadKey();
@@ -516,7 +533,7 @@ namespace Trestlebridge.Menus
                     }
                     else
                     {
-                        Console.WriteLine($"You currently have {Trestlebridge.NaturalFields.Count} natural fields and {Trestlebridge.Wildflower * 6} wildflower plants.");
+                        Console.WriteLine($"You currently have {Trestlebridge.Facilities[nf]} natural fields and {Trestlebridge.Plants[wildflower]} wildflower plants.");
                         Console.WriteLine($"You have space for {naturalFieldSpace} more wildflower rows.");
                         Console.Write("How many rows of wildflower plants would you like to purchase?  ");
                         var purchaseAmount = Int32.Parse(Console.ReadLine());
@@ -529,7 +546,7 @@ namespace Trestlebridge.Menus
                         }
                         else
                         {
-                            Trestlebridge.Wildflower += purchaseAmount;
+                            Trestlebridge.Plants[wildflower] += purchaseAmount;
                             Console.WriteLine("Wildflower Added!");
                             Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
@@ -551,6 +568,93 @@ namespace Trestlebridge.Menus
             Console.WriteLine("5. Feather Harvester");
             Console.WriteLine();
             Console.WriteLine("Choose equipment to use:");
+            int input = Int32.Parse(Console.ReadLine());
+
+            Sunflower sunflower = new();
+            Sesame sesame = new();
+            Wildflower wildflower = new();
+            NaturalField nf = new();
+            PloughingField pf = new();
+
+            
+
+            switch (input)
+            {
+                case 1:
+                    if (Trestlebridge.Plants[sunflower] == 0 && Trestlebridge.Plants[sesame] == 0 && Trestlebridge.Plants[wildflower] == 0)
+                    {
+                        Console.WriteLine("You have no plants!");
+                        break;
+                    };
+                    Console.WriteLine("");
+                    Console.WriteLine("Which field would you like to harvest for seeds?");
+                    Console.WriteLine();
+                    Console.WriteLine("1. Natural Field");
+                    Console.WriteLine("2. Ploughed Field");
+                    input = Int32.Parse(Console.ReadLine());
+
+                    if (input == 1)
+                    {
+                        foreach (var plant in Trestlebridge.Plants)
+                        {
+                            if (plant.Key.Location == nf)
+                            {
+                                Console.WriteLine($"{plant.Key}: {plant.Value}");
+                                Console.WriteLine($"Produces {plant.Key.Product}");
+                                Console.WriteLine();
+                            }
+                        }
+                        input = Int32.Parse(Console.ReadLine());
+                    }
+                    else if (input == 2)
+                    {
+                        var ploughedFieldList = new Dictionary<IPlant, int>();
+
+                        foreach (var plant in Trestlebridge.Plants)
+                        {
+                            if (plant.Key.Location == pf)
+                            {
+                                ploughedFieldList.Add(plant.Key, plant.Value);
+                            }
+                        }
+                        int i = 1;
+                        foreach (var plant in ploughedFieldList)
+                        {
+                            Console.WriteLine($"{i}. {plant.Key}");
+                            Console.WriteLine($"Produces {plant.Key.Product}");
+                            Console.WriteLine();
+                            i++;
+                        }
+                        Console.Write("Choose a plant to harvest from the list above: ");
+                        input = Int32.Parse(Console.ReadLine());
+
+                        for (int j = 0; j < ploughedFieldList.Count; j++)
+                        {
+                            var ChosenPlant = ploughedFieldList.Keys.FirstOrDefault();
+                            Console.WriteLine($"You chose {ChosenPlant}");
+                            Console.WriteLine("How many would you like to harvest?");
+                            int amount = Int32.Parse(Console.ReadLine());
+
+                            Trestlebridge.Plants[ChosenPlant] = -amount;
+                            Trestlebridge.Products.
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Improper input. Please try again.");
+                        break;
+                    }
+            
+                case 2: Console.WriteLine();
+                    break;
+                //case 3: Console.WriteLine();
+                //    break;
+                //case 4: Console.WriteLine();
+                //    break;
+                //case 5: Console.WriteLine();
+                //    break;
+            }
         }
     }
 }

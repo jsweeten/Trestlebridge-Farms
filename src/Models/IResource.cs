@@ -9,7 +9,7 @@ namespace Trestlebridge.Models
 {
     public interface IResource
     {
-        Dictionary<string, double> Product { get; set; }
-        string Location { get; set; }
+        Dictionary<ProductInventory, double> Product { get; }
+        IFacility Location { get; set; }
     }
 }

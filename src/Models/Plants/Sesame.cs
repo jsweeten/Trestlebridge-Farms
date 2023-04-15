@@ -13,21 +13,20 @@ namespace Trestlebridge.Models.Plants
         private Guid _id;
 
         // Properties
-        public string Location { get; set; }
-        public Dictionary<string, double> Product { get; set; }
+        public IFacility Location { get; set; }
+        public Dictionary<ProductInventory, double> Product { get; set; }
+        public ProductInventory SesameSeeds { get;}
 
         // Constructor
         public Sesame()
         {
             _id = Guid.NewGuid();
-            Location = "Ploughing Field";
+            Location = new PloughingField();
             Product = new()
             {
-                {"Seed", 520}
+                {SesameSeeds, 520}
             };
         }
-
         // Methods
-
     }
 }

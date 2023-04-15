@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trestlebridge.Models.Facilities;
@@ -14,8 +13,9 @@ namespace Trestlebridge.Models.Animals
 
         // Properties
         public double FeedPerDay { get; set; }
-        public string Location { get; set; }
-        public Dictionary<string, double> Product { get; set; }
+        public IFacility Location { get; set; }
+        public Dictionary<ProductInventory, double> Product { get; set; }
+        public ProductInventory Meat { get; }
 
 
         // Constructor
@@ -23,14 +23,11 @@ namespace Trestlebridge.Models.Animals
         {
             _id = Guid.NewGuid();
             FeedPerDay = 3.2;
-            Location = "Grazing Field";
+            Location = new GrazingField();
             Product = new()
             {
-                {"Meat", 8.4}
+                {Meat, 8.4}
             };
         }
-
-        // Methods
-
     }
 }
