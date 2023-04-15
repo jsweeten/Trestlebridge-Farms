@@ -4,188 +4,133 @@ using System.Text;
 using Trestlebridge.Models.Facilities;
 using Trestlebridge.Models.Animals;
 using Trestlebridge.Models.Plants;
+using System.Reflection;
 
 namespace Trestlebridge.Models
 {
     public class Farm
     {
         // Properties
-        public List<PloughingField> PloughingFields { get; set; } = new List<PloughingField>();
-        public List<GrazingField> GrazingFields { get; set; } = new List<GrazingField>();
-        public List<NaturalField> NaturalFields { get; set; } = new List<NaturalField>();
-        public List<ChickenCoop> ChickenCoops { get; set; } = new List<ChickenCoop>();
-        public List<DuckHouse> DuckHouses { get; set; } = new List<DuckHouse>();
-        internal int Meat { get; set; }
-        internal int Eggs { get; set; }
-        internal int Feathers { get; set; }
-        internal int Compost { get; set; }
-        internal int SesameSeeds { get; set; }
-        internal int SunflowerSeeds { get; set; }
-        internal int Cows { get; set; }
-        internal int Chickens { get; set; }
-        internal int Ducks { get; set; }
-        internal int Goats { get; set; }
-        internal int Ostriches { get; set; }
-        internal int Pigs { get; set; }
-        internal int Sheep { get; set; }
-        internal int Sunflower { get; set; }
-        internal int Sesame { get; set; }
-        internal int Wildflower { get; set; }
+        public Dictionary<IFacility, int> Facilities { get; set; }
+        public Dictionary<IAnimal, int> Animals { get; set; }
+        public Dictionary<IPlant, int> Plants { get; set; }
+        public Dictionary<ProductInventory, int> Products { get; set; }
 
-        private List<IFacility> Facilities { get; }
-        private List<IAnimal> Animals { get; }
-        private List<IPlant> Plants { get; }
         // Constructor
 
         public Farm()
         {
-            GrazingFields = new();
-            PloughingFields = new();
-            NaturalFields = new();
-            ChickenCoops = new();
-            DuckHouses = new();
-            Meat = 0;
-            Eggs = 0;
-            Feathers = 0;
-            Compost = 0;
-            SesameSeeds = 0;
-            SunflowerSeeds = 0;
-            Cows = 0;
-            Chickens = 0;
-            Ducks = 0;
-            Goats = 0;
-            Ostriches = 0;
-            Pigs = 0;
-            Sheep = 0;
-            Sesame = 0;
-            Sunflower = 0;
-            Wildflower = 0;
+            Facilities = new()
+            {
+                { new GrazingField(), 0 },
+                { new PloughingField(), 0 },
+                { new NaturalField(), 0 },
+                { new ChickenCoop(), 0 },
+                { new DuckHouse(), 0 }
+            };
+            Animals = new()
+            {
+                { new Chicken(), 0},
+                { new Cow(), 0 },
+                { new Duck(), 0 },
+                { new Goat(), 0 },
+                { new Ostrich(), 0 },
+                { new Pig(), 0 },
+                { new Sheep(), 0 }
+            };
+            Plants = new()
+                            {
+                { new Wildflower(), 0},
+                { new Sunflower(), 0 },
+                { new Sesame(), 0 }
+            };
+            Products = new();
         }
 
         public void InventoryReport()
         {
-            Console.Write($@"
-    Here's your inventory report:
-    -----------------------------
-    
-    Facilities
-    
-    Grazing Fields: {GrazingFields.Count}
-    Total Capacity: {GrazingFields.Count * 20}
+            Console.WriteLine("Here's your inventory report:");
+            Console.WriteLine("-----------------------------");
+            Console.WriteLine();
+            Console.WriteLine("Facilities");
+            Console.WriteLine();
 
-    Natural Fields: {NaturalFields.Count}
-    Total Capacity: {NaturalFields.Count * 10}
+            foreach (var Facility in Facilities)
+            {
+                Console.WriteLine($"{Facility.Key}s: {Facility.Value}");
+                Console.WriteLine($"Total Capacity: {Facility.Key.Capacity * Facility.Value}");
+            }
 
-    Ploughed Fields: {PloughingFields.Count}
-    Total Capacity: {PloughingFields.Count * 13}
+            Console.WriteLine();
+            Console.WriteLine("Plants");
+            Console.WriteLine();
 
-    Chicken Coops: {ChickenCoops.Count}
-    Total Capacity: {ChickenCoops.Count * 15}
+            foreach (var Animal in Animals)
+            {
+                Console.WriteLine($"{Animal.Key}: {Animal.Value}");
+            }
 
-    Duck Houses: {DuckHouses.Count}
-    Total Capacity: {DuckHouses.Count * 12}
+            Console.WriteLine();
+            Console.WriteLine("Plants");
+            foreach (var Plant in Plants)
+            {
+                Console.WriteLine($"{Plant.Key}: {Plant.Value}");
+            }
+            
+            Console.WriteLine();
+            Console.WriteLine("Products for Sale");
+            Console.WriteLine();
+            foreach (var Product in Products)
+            {
+                Console.WriteLine($"{Product.Key}: {Product.Value}");
+            }
 
-    Animals
-
-    Meat: {Meat}
-    Egg: {Eggs}
-    Feather: {Feathers}
-    Compost: {Compost}
-    Chickens: {Chickens}
-    Cows: {Cows}
-    Ducks: {Ducks}
-    Goats: {Goats}
-    Ostriches: {Ostriches}
-    Pigs: {Pigs}
-    Sheep: {Sheep}
-
-    Plants
-
-    Sunflower: {Sunflower * 6}
-    Sesame: {Sesame * 5}
-    Wildflower: {Wildflower * 6}
-
-    -----------------------------
-
-    Press any key to continue...");
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
 
-        /*
-            This method must specify the correct product interface of the
-            resource being purchased.
-         */
-        //public void PurchaseResource<T>(IResource resource, string name)
-        //{
-        //    Console.WriteLine(typeof(T).ToString());
-        //    switch (typeof(T).ToString())
-        //    {
-        //        case "Cow":
-        //            GrazingFields[index].AddResource((IGrazing)resource);
-        //            break;
-        //        case "Chicken":
-        //            GrazingFields[index].AddResource((IAnimal)resource);
-        //            break;
-        //        case "Duck":
-        //            GrazingFields[index].AddResource((IAnimal)resource);
-        //            break;
-        //        case "Goat":
-        //            GrazingFields[index].AddResource((IGrazing)resource);
-        //            break;
-        //        case "Ostrich":
-        //            GrazingFields[index].AddResource((IGrazing)resource);
-        //            break;
-        //        case "Pig":
-        //            GrazingFields[index].AddResource((IGrazing)resource);
-        //            break;
-        //        case "Sheep":
-        //            GrazingFields[index].AddResource((IGrazing)resource);
-        //            break;
-        //        case "Sesame":
-        //            GrazingFields[index].AddResource((IPlant)resource);
-        //            break;
-        //        case "Sunflower":
-        //            GrazingFields[index].AddResource((IPlant)resource);
-        //            break;
-        //        case "Wildflower":
-        //            GrazingFields[index].AddResource((IPlant)resource);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
-        public void AddGrazingField(GrazingField field)
+        public void AddGrazingField()
         {
-            GrazingFields.Add(field);
+            GrazingField field = new();
+            if (Facilities.Keys.GetType() == field.GetType())
+            {
+                Facilities[field]++;
+            }
         }
-        public void AddPloughingField(PloughingField field)
+        public void AddPloughingField()
         {
-            PloughingFields.Add(field);
+            PloughingField field = new();
+            if (Facilities.Keys.GetType() == field.GetType())
+            {
+                Facilities[field]++;
+            }
         }
-        public void AddNaturalField(NaturalField field)
+        public void AddNaturalField()
         {
-            NaturalFields.Add(field);
+            NaturalField field = new();
+            if (Facilities.Keys.GetType() == field.GetType())
+            {
+                Facilities[field]++;
+            }
         }
-        public void AddChickenCoop(ChickenCoop coop)
+        public void AddChickenCoop()
         {
-            ChickenCoops.Add(coop);
+            ChickenCoop c = new();
+            if (Facilities.Keys.GetType() == c.GetType())
+            {
+                Facilities[c]++;
+            }
         }
-        public void AddDuckHouse(DuckHouse house)
+        public void AddDuckHouse()
         {
-            DuckHouses.Add(house);
+            DuckHouse d = new();
+            if (Facilities.Keys.GetType() == d.GetType())
+            {
+                Facilities[d]++;
+            }
         }
-
-        //public override string ToString()
-        //{
-        //    StringBuilder report = new StringBuilder();
-
-        //    GrazingFields.ForEach(gf => report.Append(gf));
-        //    PlowingFields.ForEach(gf => report.Append(gf));
-        //    NaturalFields.ForEach(gf => report.Append(gf));
-
-
-        //    return report.ToString();
-        //}
     }
 }
