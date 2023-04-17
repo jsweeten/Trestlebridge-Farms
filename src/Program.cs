@@ -26,7 +26,7 @@ namespace Trestlebridge
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkCyan;
 
-            Farm Trestlebridge = new Farm();
+            Farm Trestlebridge = new();
 
             bool ExecuteProgram = true;
 

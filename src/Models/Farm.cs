@@ -5,6 +5,7 @@ using Trestlebridge.Models.Facilities;
 using Trestlebridge.Models.Animals;
 using Trestlebridge.Models.Plants;
 using System.Reflection;
+using System.Resources;
 
 namespace Trestlebridge.Models
 {
@@ -12,9 +13,9 @@ namespace Trestlebridge.Models
     {
         // Properties
         public Dictionary<IFacility, int> Facilities { get; set; }
-        public Dictionary<IAnimal, int> Animals { get; set; }
-        public Dictionary<IPlant, int> Plants { get; set; }
-        public ProductInventory Products { get; set; }
+        public Dictionary<string, int> Animals { get; set; }
+        public Dictionary<string, int> Plants { get; set; }
+        public Dictionary<string, double> Products { get; set; }
 
         // Constructor
 
@@ -30,31 +31,31 @@ namespace Trestlebridge.Models
             };
             Animals = new()
             {
-                { new Chicken(), 0},
-                { new Cow(), 0 },
-                { new Duck(), 0 },
-                { new Goat(), 0 },
-                { new Ostrich(), 0 },
-                { new Pig(), 0 },
-                { new Sheep(), 0 }
+                { "Chickens", 0},
+                { "Cows", 0 },
+                { "Ducks", 0 },
+                { "Goats", 0 },
+                { "Ostriches", 0 },
+                { "Pigs", 0 },
+                { "Sheep", 0 }
             };
             Plants = new()
             {
-                { new Wildflower(), 0},
-                { new Sunflower(), 0 },
-                { new Sesame(), 0 }
+                { "Wildflowers", 0},
+                { "Sunflowers", 0 },
+                { "Sesame", 0 }
             };
             Products = new()
             {
-                Meat = 0,
-                Eggs = 0,
-                Feathers = 0,
-                SunflowerSeeds = 0,
-                SesameSeeds = 0,
-                Compost = 0
+                { "Meat", 0 },
+                { "Eggs", 0 },
+                { "Feathers", 0 },
+                { "SunflowerSeeds", 0 },
+                { "SesameSeeds", 0 },
+                { "Compost", 0 }
             };
-
         }
+            
 
         public void InventoryReport()
         {
@@ -88,13 +89,11 @@ namespace Trestlebridge.Models
             
             Console.WriteLine();
             Console.WriteLine("Products for Sale");
-            Console.WriteLine(); 
-            Console.WriteLine($"Meat: {Products.Meat}");
-            Console.WriteLine($"Eggs: {Products.Eggs}");
-            Console.WriteLine($"Feathers: {Products.Feathers}");
-            Console.WriteLine($"Compost: {Products.Compost}");
-            Console.WriteLine($"Sunflower Seeds: {Products.SunflowerSeeds}");
-            Console.WriteLine($"Sesame Seeds: {Products.SesameSeeds}");
+            Console.WriteLine();
+            foreach (var product in Products)
+            {
+                Console.WriteLine($"{product.Key}: {product.Value}");
+            }
             Console.WriteLine();
             Console.WriteLine("-----------------------------");
             Console.WriteLine();
@@ -141,6 +140,43 @@ namespace Trestlebridge.Models
             {
                 Facilities[d]++;
             }
+        }
+        public KeyValuePair<string, int> ResourceFinder(string key, out KeyValuePair<string, int> match)
+        {
+            if (key == Plants[key].ToString())
+            {
+                match =  { key, Plants[key]};
+                return match;
+            }
+            foreach (string k in Plants.Keys)
+            {
+                if (key == k)
+                {
+                    match = { k.Key, k.Value };
+                }
+            }
+            foreach (string k in Animals.Keys)
+            {
+                if (key == k)
+                {
+                    return 
+                }
+            }
+        }
+
+        public void UpdateInventory(string resourceUsed, int resourceAmount)
+        {
+
+
+        }
+        public void AddProduct(string resourceUsed, int resourceAmount)
+        {
+            Products[resourceUsed] = Products[] + inventoryAmount;   
+        }
+
+        public void RemoveResource(string resourceUsed, int resourceAmount)
+        {
+            Products[inventoryItem] = Products[inventoryItem] + inventoryAmount;
         }
     }
 }
