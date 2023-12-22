@@ -633,25 +633,25 @@ namespace Trestlebridge.Menus
                         }
                         Console.Write("Choose a plant to harvest from the list above: ");
                         input = Int32.Parse(Console.ReadLine());
-                        var ChosenPlant = new KeyValuePair<IPlant, int>();
-                        for (int j = 0; j < ploughedFieldList.Count; j++)
-                        {
-                            ChosenPlant = ploughedFieldList.ElementAt(j);
-                            Console.WriteLine($"You chose {ChosenPlant.Key}");
-                        }
+                        var ChosenPlant = new KeyValuePair<IPlant, double>();
+                        //for (int j = 0; j < ploughedFieldList.Count; j++)
+                        //{
+                        //    ChosenPlant = ploughedFieldList.ElementAt(j);
+                        //    Console.WriteLine($"You chose {ChosenPlant.Key}");
+                        //}
                         
-                        Console.WriteLine("How many would you like to harvest?");
-                        int amount = Int32.Parse(Console.ReadLine());
+                        //Console.WriteLine("How many would you like to harvest?");
+                        //int amount = Int32.Parse(Console.ReadLine());
                         
-                        Trestlebridge.Plants[ChosenPlant.Key] =- amount;
+                        //Trestlebridge.Plants[ChosenPlant.Key] =- amount;
 
-                        foreach (var product in ChosenPlant.Key.Product)
-                        {
-                            PropertyInfo p = Trestlebridge.Products.p;
-                        }
-                        Trestlebridge.Products =+ ChosenPlant.Key.Product * amount;
+                        //foreach (var product in ChosenPlant.Key.Product)
+                        //{
+                        //    PropertyInfo p = Trestlebridge.Products;
+                        //}
+                        //Trestlebridge.Products += ChosenPlant.Key.Product;
 
-                        Console.WriteLine("Transaction Complete!");
+                        //Console.WriteLine("Transaction Complete!");
                         break;
                     }
                     else

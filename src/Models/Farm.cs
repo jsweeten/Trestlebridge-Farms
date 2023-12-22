@@ -53,7 +53,6 @@ namespace Trestlebridge.Models
                 SesameSeeds = 0,
                 Compost = 0
             };
-
         }
 
         public void InventoryReport()
@@ -142,5 +141,24 @@ namespace Trestlebridge.Models
                 Facilities[d]++;
             }
         }
+
+        //public void UpdateInventory(IResource resource, double amount)
+        //{
+        //    PropertyInfo p = Products.p;
+        //    if (resource.ToString() == Products)
+        //}
+
+        //void Process(IResource resource, int count)
+        //{
+        //    Type t = GetType();
+        //    PropertyInfo p = t.GetProperty(resource.ToString());
+        //    foreach (var p of resource.Product)
+        //    {
+        //        if (p == product.Key)
+        //        {
+        //            p.SetValue(p, ++product.Value);
+        //        }
+        //    }
+        //}
     }
 }
